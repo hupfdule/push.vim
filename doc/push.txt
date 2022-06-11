@@ -1,14 +1,15 @@
 *push*  Push text to reference column in previous lines.
 
-Version:        0.1.0
-Release Date:   2022-07-11
+Version:        0.2.0
+Release Date:   2022-07-12
 
 ==============================================================================
 Contents ~
 
     1. Introduction ............................. |introduction|
     2. Mappings ................................. |mappings|
-         <Plug>PushToNext                         |push-to-next|
+         <Plug>PushToNextWord                     |push-to-next-word|
+         <Plug>PushToNextWORD                     |push-to-next-WORD|
          <Plug>PushFarthest                       |push-farthest|
          Default mappings                         |default-mappings|
     3. Commands ................................. |commands|
@@ -44,10 +45,18 @@ cursor position, even if the cursor is inside a word.
 All the mappings have support for |tpope/repeat.vim| and are therefore
 repeatable with the dot command.
 
-  <Plug>(PushToNext)                                              *push-to-next*
+  <Plug>(PushToNextWord)                                     *push-to-next-word*
+  <Plug>(PushToNextWORD)                                     *push-to-next-WORD*
 
       Push the current word (in normal mode) or the cursor (in insert mode)
       to the next push stop.
+      Both mappings differ only in what they consider a 'word'.
+      The first mapping considers a word to be a number of keyword-characters
+      preceded by at least one non-keyword character.
+      The second mapping considers a word to be a number of word-characters
+      preceded by at least one whitespace character. Therefore they are in
+      line with vims use of "word" and "WORD".
+      See ':h word' and ':h WORD'.
 
       Example:  >
 
@@ -103,8 +112,9 @@ Default mappings                                              *default-mappings*
 Unless |g:push_no_default_mappings| is set to `v:true` the following
 mappings will be applied (for normal mode as well as for insert mode):
 
-  *<Tab>*    `<Plug>`(PushToNext)
-  *<S-Tab>*  `<Plug>`(PushFarthest)
+  *<Tab>w*    `<Plug>`(PushToNextWord)
+  *<Tab>W*    `<Plug>`(PushToNextWORD)
+  *<Tab>e*    `<Plug>`(PushFarthest)
 
 
 ==============================================================================
@@ -149,6 +159,11 @@ skywind3000/vim-quickui
 
 ==============================================================================
 CHANGELOG                                                            *changelog*
+
+    0.2.0 .................................................... 2022-07-12
+
+        - Differentiate between word- and WORD-jumps
+        - Change default mappings
 
     0.1.0 .................................................... 2022-07-11
 

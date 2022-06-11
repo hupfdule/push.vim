@@ -27,10 +27,19 @@ cursor position, even if the cursor is inside a word.
 All the mappings have support for [tpope/repeat.vim] and are therefore
 repeatable with the dot command.
 
-  - `<Plug>(PushToNext)`
+  - `<Plug>(PushToNextWord)`
+  - `<Plug>(PushToNextWORD)`
 
     Push the current word (in normal mode) or the cursor (in insert mode)
     to the next push stop.
+
+    Both mappings differ only in what they consider a 'word'.
+    The first mapping considers a word to be a number of keyword-characters
+    preceded by at least one non-keyword character.
+    The second mapping considers a word to be a number of word-characters
+    preceded by at least one whitespace character. Therefore they are in
+    line with vims use of "word" and "WORD".
+    See ':h word' and ':h WORD'.
 
     Example:
 
@@ -106,9 +115,11 @@ repeatable with the dot command.
 Unless `g:push_no_default_mappings` is set to `v:true` the following
 mappings will be applied (for normal mode as well as for insert mode):
 
-  - `<Tab>`:    `<Plug>(PushToNext)`
+  - `<Tab>w`:    `<Plug>(PushToNextWord)`
 
-  - `<S-Tab>`:  `<Plug>(PushFarthest)`
+  - `<Tab>W`:    `<Plug>(PushToNextWORD)`
+
+  - `<Tab>e`:    `<Plug>(PushFarthest)`
 
 
 Commands

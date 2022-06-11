@@ -9,7 +9,11 @@ silent! let s:log = log#getLogger(expand('<sfile>:t'))
 "                      Otherwise, the word the cursor is on will be pushed.
 "                      The word will remain intact and start at the next
 "                      push stop.
-function! push#to_next(split_words) abort
+"
+" @param {search_flags} a list of search flags. Currently supported flags:
+"                       'W': search WORD-wise instead of word-wise
+"                            (see :h word and :h WORD)
+function! push#to_next(split_words, search_flags) abort
   if !a:split_words
     let l:chars_left = s:start_of_cword()
     silent! call s:log.debug("<cword> begins " . l:chars_left . " chars to the left")
@@ -19,7 +23,7 @@ function! push#to_next(split_words) abort
   endif
 
   " Now find the reference line above
-  let l:push_cols = s:get_ref_col()
+  let l:push_cols = s:get_ref_col(a:search_flags)
   if l:push_cols !=# 0
     execute "normal! i" . repeat(' ', l:push_cols + 1)
     execute 'normal! l'
@@ -31,7 +35,11 @@ function! push#to_next(split_words) abort
     endif
   endif
 
-  silent! call repeat#set("\<Plug>(PushToNext)")
+  if a:search_flags =~# 'W'
+    silent! call repeat#set("\<Plug>(PushToNextWORD)")
+  else
+    silent! call repeat#set("\<Plug>(PushToNextWord)")
+  endif
 endfunction
 
 
@@ -194,12 +202,16 @@ endfunction
 ""
 " Calculate the column of a reference line above the current one to which to push to.
 "
-" This searches for all possible push columns in the lines above. The
+" This searches for all possible push stops in the lines above. The
 " nearest one is preferred, but if it does not contain another push stop,
 " the search goes on on the lines above it.
 "
+" @param {search_flags} a list of search flags. Currently supported flags:
+"                       'W': search WORD-wise instead of word-wise
+"                            (see :h word and :h WORD)
+"
 " @return the number of characters to push to reach the next push stop
-function! s:get_ref_col() abort
+function! s:get_ref_col(search_flags) abort
   let l:pushcol = -1
 
   let l:col = virtcol('.')
@@ -213,7 +225,7 @@ function! s:get_ref_col() abort
     endif
 
     let l:refline_after_cursor = strcharpart(l:refline, l:col)
-    let l:pushcol = strchars(matchstr(l:refline_after_cursor, '.\{-}\s\+\ze\k'))
+    let l:pushcol = s:next_push_stop(l:refline_after_cursor, a:search_flags)
     if l:pushcol !=# 0
       break
     endif
@@ -265,4 +277,41 @@ function! s:start_of_cword() abort
   else
     return 0
   endif
+endfunction
+
+
+""
+" Find the column of the next push stop in the given line.
+"
+" If the {flags} contains a 'W' the search is done by 'WORD', that means a
+" push stop starts after whitespace. Otherwise a push stop start after a
+" non-keyword character (see :h \k).
+"
+" @param {line} the line in which to search for the next push stop
+" @param {flags} a list of search flags. Currently supported flags:
+"                'W': search WORD-wise instead of word-wise
+"                     (see :h word and :h WORD)
+"
+" @returns the char index of he next push stop or 0 if no push stop was found
+function! s:next_push_stop(line, flags) abort
+  let l:chars = split(a:line, '\zs')
+
+  if a:flags =~# 'W'
+    let l:charpattern = '\S'
+  else
+    let l:charpattern = '\k'
+  endif
+
+  let l:nonmatch_found = v:false
+  for i in range(len(l:chars))
+    if l:chars[i] =~# l:charpattern
+      if !l:nonmatch_found
+        continue
+      else
+        return i
+      endif
+    else
+      let l:nonmatch_found = v:true
+    endif
+  endfor
 endfunction
