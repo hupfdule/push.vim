@@ -1,7 +1,7 @@
 *push*  Push text to reference column in previous lines.
 
-Version:        0.2.0
-Release Date:   2022-07-12
+Version:        0.3.0
+Release Date:   2022-07-13
 
 ==============================================================================
 Contents ~
@@ -88,6 +88,13 @@ repeatable with the dot command.
       Nibh                                            integre eros debet dicta.
 <
 
+  <Plug>(PushToNextWordBelow)                          *push-to-next-word-below*
+  <Plug>(PushToNextWORDBelow)                          *push-to-next-WORD-below*
+
+      Those mappings are the same as <Plug>(PushToNextWord) and
+      <Plug>(PushToNextWORD), but push to the push stop in the lines /below/
+      the current one instead of the lines above.
+
   <Plug>(PushFarthest)                                        *push-to-farthest*
 
       Push the content of the line from the current word (in normal mode)
@@ -114,6 +121,8 @@ mappings will be applied (for normal mode as well as for insert mode):
 
   *<Tab>w*    `<Plug>`(PushToNextWord)
   *<Tab>W*    `<Plug>`(PushToNextWORD)
+  *<Tab>dw*   `<Plug>`(PushToNextWordBelow)
+  *<Tab>dW*   `<Plug>`(PushToNextWORDBelow)
   *<Tab>e*    `<Plug>`(PushFarthest)
 
 
@@ -159,6 +168,10 @@ skywind3000/vim-quickui
 
 ==============================================================================
 CHANGELOG                                                            *changelog*
+
+    0.3.0 .................................................... 2022-07-13
+
+        - Allow jumping to push stop in lines below the current one
 
     0.2.0 .................................................... 2022-07-12
 

@@ -36,9 +36,17 @@ function! push#to_next(split_words, search_flags) abort
   endif
 
   if a:search_flags =~# 'W'
-    silent! call repeat#set("\<Plug>(PushToNextWORD)")
+    if a:search_flags =~# 'd'
+      silent! call repeat#set("\<Plug>(PushToNextWORDBelow)")
+    else
+      silent! call repeat#set("\<Plug>(PushToNextWORD)")
+    endif
   else
-    silent! call repeat#set("\<Plug>(PushToNextWord)")
+    if a:search_flags =~# 'd'
+      silent! call repeat#set("\<Plug>(PushToNextWordBelow)")
+    else
+      silent! call repeat#set("\<Plug>(PushToNextWord)")
+    endif
   endif
 endfunction
 
@@ -209,6 +217,8 @@ endfunction
 " @param {search_flags} a list of search flags. Currently supported flags:
 "                       'W': search WORD-wise instead of word-wise
 "                            (see :h word and :h WORD)
+"                       'd': align with the lines below (downwards) rather
+     "                       than with the lines above the current one.
 "
 " @return the number of characters to push to reach the next push stop
 function! s:get_ref_col(search_flags) abort
@@ -216,21 +226,50 @@ function! s:get_ref_col(search_flags) abort
 
   let l:col = virtcol('.')
   let l:reflnum = line('.')
-  while l:reflnum > 0
-    let l:reflnum -= 1
-    let l:refline = getline(l:reflnum)
+  if a:search_flags =~# 'd'
+    let l:lastline = line('$')
+    while l:reflnum <= l:lastline
+      let l:reflnum += 1
+      let l:pushcol = s:get_push_stop(l:reflnum, l:col, a:search_flags)
+      if l:pushcol !=# 0
+        break
+      endif
+    endwhile
+  else
+    while l:reflnum > 0
+      let l:reflnum -= 1
+      let l:pushcol = s:get_push_stop(l:reflnum, l:col, a:search_flags)
+      if l:pushcol !=# 0
+        break
+      endif
+    endwhile
+  endif
 
-    if l:refline =~# '^\s*$'
-      continue
-    endif
+  return l:pushcol
+endfunction
 
-    let l:refline_after_cursor = strcharpart(l:refline, l:col)
-    let l:pushcol = s:next_push_stop(l:refline_after_cursor, a:search_flags)
-    if l:pushcol !=# 0
-      break
-    endif
-  endwhile
 
+""
+" Find the next push stop in the given {line}.
+"
+" The search starts at {start_col}.
+"
+" @param {lnum}         The line in which to search the next push stop.
+"        {start_col}    Start the search at this column.
+"        {search_flags} The search flags to use. Currently supported flags:
+"                       'W': search WORD-wise instead of word-wise
+"                            (see :h word and :h WORD)
+"
+" @returns the column of the next pushstop or 0 if no further push stop was found
+function! s:get_push_stop(lnum, start_col, search_flags) abort
+  let l:line = getline(a:lnum)
+
+  if l:line =~# '^\s*$'
+    return 0
+  endif
+
+  let l:line_after_cursor = strcharpart(l:line, a:start_col)
+  let l:pushcol = s:next_push_stop(l:line_after_cursor, a:search_flags)
   return l:pushcol
 endfunction
 

@@ -84,6 +84,12 @@ repeatable with the dot command.
     Push to Next in insert mode:
     ![push-to-next insert mode](pushnext-i.gif)
 
+  - `<Plug>(PushToNextWordBelow)`
+  - `<Plug>(PushToNextWORDBelow)`
+
+    Those mappings are the same as `<Plug>(PushToNextWord)` and
+    `<Plug>(PushToNextWORD)`, but push to the push stop in the lines _below_
+    the current one instead of the lines above.
 
   - `<Plug>(PushFarthest)`
 
@@ -118,6 +124,10 @@ mappings will be applied (for normal mode as well as for insert mode):
   - `<Tab>w`:    `<Plug>(PushToNextWord)`
 
   - `<Tab>W`:    `<Plug>(PushToNextWORD)`
+
+  - `<Tab>dw`:   `<Plug>(PushToNextWordBelow)`
+
+  - `<Tab>dW`:   `<Plug>(PushToNextWORDBelow)`
 
   - `<Tab>e`:    `<Plug>(PushFarthest)`
 
