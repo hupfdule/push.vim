@@ -13,6 +13,8 @@ silent! let s:log = log#getLogger(expand('<sfile>:t'))
 " @param {search_flags} a list of search flags. Currently supported flags:
 "                       'W': search WORD-wise instead of word-wise
 "                            (see :h word and :h WORD)
+"                       'd': align with the lines below (downwards) rather
+"                            than with the lines above the current one.
 function! push#to_next(split_words, search_flags) abort
   if !a:split_words
     let l:chars_left = s:start_of_cword()
@@ -81,6 +83,59 @@ function! push#farthest(split_words) abort
   endif
 
   silent! call repeat#set("\<Plug>(PushFarthest)")
+endfunction
+
+
+""
+" Push the cursor to the next push stop without modifying the buffer.
+"
+" @param {search_flags} a list of search_flags. Currently supported flags:
+"                       'W': search WORD-wise instead of word-wise
+"                            (see :h word and :h WORD)
+"                       'd': align with the lines below (downwards) rather
+"                            than with the lines above the current one.
+"                       'b': push backwards
+function! push#cursor(search_flags) abort
+  " Find the reference line above
+  let l:push_cols = s:get_ref_col(a:search_flags)
+  if l:push_cols !=# 0
+    if a:search_flags =~# 'b'
+      execute "normal! " . repeat('h', virtcol('.') - l:push_cols - 1)
+    else
+      execute "normal! " . repeat('l', l:push_cols + 1)
+    endif
+  endif
+
+  " prepare vim-repeat
+  if a:search_flags =~# 'W'
+    if a:search_flags =~# 'b'
+      if a:search_flags =~# 'd'
+        silent! call repeat#set("\<Plug>(PushCursorBACKBelow)")
+      else
+        silent! call repeat#set("\<Plug>(PushCursorBACK)")
+      endif
+    else
+      if a:search_flags =~# 'd'
+        silent! call repeat#set("\<Plug>(PushCursorFORWARDBelow)")
+      else
+        silent! call repeat#set("\<Plug>(PushCursorFORWARD)")
+      endif
+    endif
+  else
+    if a:search_flags =~# 'b'
+      if a:search_flags =~# 'd'
+        silent! call repeat#set("\<Plug>(PushCursorBackBelow)")
+      else
+        silent! call repeat#set("\<Plug>(PushCursorBack)")
+      endif
+    else
+      if a:search_flags =~# 'd'
+        silent! call repeat#set("\<Plug>(PushCursorForwardBelow)")
+      else
+        silent! call repeat#set("\<Plug>(PushCursorForward)")
+      endif
+    endif
+  endif
 endfunction
 
 
@@ -218,7 +273,8 @@ endfunction
 "                       'W': search WORD-wise instead of word-wise
 "                            (see :h word and :h WORD)
 "                       'd': align with the lines below (downwards) rather
-     "                       than with the lines above the current one.
+"                            than with the lines above the current one.
+"                       'b': search backwards
 "
 " @return the number of characters to push to reach the next push stop
 function! s:get_ref_col(search_flags) abort
@@ -259,6 +315,7 @@ endfunction
 "        {search_flags} The search flags to use. Currently supported flags:
 "                       'W': search WORD-wise instead of word-wise
 "                            (see :h word and :h WORD)
+"                       'b': search backwards
 "
 " @returns the column of the next pushstop or 0 if no further push stop was found
 function! s:get_push_stop(lnum, start_col, search_flags) abort
@@ -268,9 +325,15 @@ function! s:get_push_stop(lnum, start_col, search_flags) abort
     return 0
   endif
 
-  let l:line_after_cursor = strcharpart(l:line, a:start_col)
-  let l:pushcol = s:next_push_stop(l:line_after_cursor, a:search_flags)
-  return l:pushcol
+  if a:search_flags =~# 'b'
+    let l:line_before_cursor = strcharpart(l:line, 0, a:start_col - 1)
+    let l:pushcol = s:prev_push_stop(l:line_before_cursor, a:search_flags)
+    return l:pushcol
+  else
+    let l:line_after_cursor = strcharpart(l:line, a:start_col)
+    let l:pushcol = s:next_push_stop(l:line_after_cursor, a:search_flags)
+    return l:pushcol
+  endif
 endfunction
 
 
@@ -351,6 +414,43 @@ function! s:next_push_stop(line, flags) abort
       endif
     else
       let l:nonmatch_found = v:true
+    endif
+  endfor
+endfunction
+
+
+""
+" Find the column of the previous push stop in the given line.
+"
+" If the {flags} contains a 'W' the search is done by 'WORD', that means a
+" push stop starts after whitespace. Otherwise a push stop start after a
+" non-keyword character (see :h \k).
+"
+" @param {line} the line in which to search for the previous push stop
+" @param {flags} a list of search flags. Currently supported flags:
+"                'W': search WORD-wise instead of word-wise
+"                     (see :h word and :h WORD)
+"
+" @returns the char index of he next push stop or 0 if no push stop was found
+function! s:prev_push_stop(line, flags) abort
+  let l:chars = split(a:line, '\zs')
+
+  if a:flags =~# 'W'
+    let l:charpattern = '\S'
+  else
+    let l:charpattern = '\k'
+  endif
+
+  let l:chars_found = v:false
+  for i in reverse(range(len(l:chars)))
+    if l:chars[i] !~# l:charpattern
+      if !l:chars_found
+        continue
+      else
+        return i + 1
+      endif
+    else
+      let l:chars_found = v:true
     endif
   endfor
 endfunction

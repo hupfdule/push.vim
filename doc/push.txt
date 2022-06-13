@@ -1,7 +1,7 @@
 *push*  Push text to reference column in previous lines.
 
-Version:        0.3.0
-Release Date:   2022-07-13
+Version:        0.4.0
+Release Date:   2022-07-14
 
 ==============================================================================
 Contents ~
@@ -10,7 +10,10 @@ Contents ~
     2. Mappings ................................. |mappings|
          <Plug>PushToNextWord                     |push-to-next-word|
          <Plug>PushToNextWORD                     |push-to-next-WORD|
+         <Plug>PushToNextWordBelow                |push-to-next-word-below|
+         <Plug>PushToNextWORDBelow                |push-to-next-WORD-below|
          <Plug>PushFarthest                       |push-farthest|
+         <Plug>PushCursor*                        |push-cursor|
          Default mappings                         |default-mappings|
     3. Commands ................................. |commands|
          :PushHelp                                |:PushHelp|
@@ -113,6 +116,26 @@ repeatable with the dot command.
       <Plug>(MyPlugMap)                                       *my-plug-map*
       <Plug>(OtherPlugMap)                                 *other-plug-map*
 <
+  <Plug>(PushCursorBack)                                           *push-cursor*
+  <Plug>(PushCursorBACK)
+  <Plug>(PushCursorBackBelow)
+  <Plug>(PushCursorBACKBelow)
+  <Plug>(PushCursorForward)
+  <Plug>(PushCursorFORWARD)
+  <Plug>(PushCursorForwardBelow)
+  <Plug>(PushCursorFORWARDBelow)
+
+      Push the cursor to the corresponding push stop without doing
+      modifications to the text in the buffer. The nomenclature is the same as
+      for the other mappings described above. The cursor may be pushed forward
+      or backward. The uppercase variants jump WORD-wise. If the mapping name
+      ends in "Below", the push stop is search in the lines /below/ the
+      current one instead of the lines above.
+
+      Even though those mappings are actually motions and do not change
+      anything in the buffer, they are repeatable via the dot command by
+      integrating with |tpope/vim-repeat|.
+
 
 Default mappings                                              *default-mappings*
 
@@ -124,6 +147,14 @@ mappings will be applied (for normal mode as well as for insert mode):
   *<Tab>dw*   `<Plug>`(PushToNextWordBelow)
   *<Tab>dW*   `<Plug>`(PushToNextWORDBelow)
   *<Tab>e*    `<Plug>`(PushFarthest)
+  *<Tab>b*    `<Plug>`(PushCursorBack)
+  *<Tab>B*    `<Plug>`(PushCursorBACK)
+  *<Tab>db*   `<Plug>`(PushCursorBackBelow)
+  *<Tab>dB*   `<Plug>`(PushCursorBACKBelow)
+  *<Tab>f*    `<Plug>`(PushCursorForward)
+  *<Tab>F*    `<Plug>`(PushCursorFORWARD)
+  *<Tab>df*   `<Plug>`(PushCursorForwardBelow)
+  *<Tab>dF*   `<Plug>`(PushCursorFORWARDBelow)
 
 
 ==============================================================================
@@ -168,6 +199,10 @@ skywind3000/vim-quickui
 
 ==============================================================================
 CHANGELOG                                                            *changelog*
+
+    0.4.0 .................................................... 2022-07-14
+
+        - Allow pushing the cursor without modification
 
     0.3.0 .................................................... 2022-07-13
 

@@ -115,6 +115,25 @@ repeatable with the dot command.
     Push Farthest:
     ![push-farthest](pushfarthest.gif)
 
+  - `<Plug>(PushCursorBack)`
+  - `<Plug>(PushCursorBACK)`
+  - `<Plug>(PushCursorBackBelow)`
+  - `<Plug>(PushCursorBACKBelow)`
+  - `<Plug>(PushCursorForward)`
+  - `<Plug>(PushCursorFORWARD)`
+  - `<Plug>(PushCursorForwardBelow)`
+  - `<Plug>(PushCursorFORWARDBelow)`
+
+    Push the cursor to the corresponding push stop without doing
+    modifications to the text in the buffer. The nomenclature is the same as
+    for the other mappings described above. The cursor may be pushed forward
+    or backward. The uppercase variants jump WORD-wise. If the mapping name
+    ends in "Below", the push stop is search in the lines /below/ the
+    current one instead of the lines above.
+
+    Even though those mappings are actually motions and do not change
+    anything in the buffer, they are repeatable via the dot command by
+    integrating with [tpope/vim-repeat].
 
 ### Default mappings
 
@@ -131,6 +150,21 @@ mappings will be applied (for normal mode as well as for insert mode):
 
   - `<Tab>e`:    `<Plug>(PushFarthest)`
 
+  - `<Tab>b`:    `<Plug>(PushCursorBack)`
+
+  - `<Tab>B`:    `<Plug>(PushCursorBACK)`
+
+  - `<Tab>db`:   `<Plug>(PushCursorBackBelow)`
+
+  - `<Tab>dB`:   `<Plug>(PushCursorBACKBelow)`
+
+  - `<Tab>f`:    `<Plug>(PushCursorForward)`
+
+  - `<Tab>F`:    `<Plug>(PushCursorFORWARD)`
+
+  - `<Tab>df`:   `<Plug>(PushCursorForwardBelow)`
+
+  - `<Tab>dF`:   `<Plug>(PushCursorFORWARDBelow)`
 
 Commands
 --------
