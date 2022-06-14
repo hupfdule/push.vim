@@ -27,10 +27,10 @@ INTRODUCTION                                                      *introduction*
 
 *push.vim* is a plugin to push text in the current line to a "push stop" in a
 line above the current one (called a reference line).
-Its purpose is to align text with the text in some line above.
+Its purpose is to align text with the text in some line above (or below).
 
 Depending on the actual function a "push stop" may either be the beginning of
-a word or the end of the last word of a line.
+a word or the end of a word in a reference line.
 
 To find a "push stop" this plugin looks in the lines above the current one
 until it finds a push stop that is further to the right than the cursor (or
@@ -43,9 +43,10 @@ MAPPINGS                                                              *mappings*
 All mappings exist for normal mode and insert mode.
 They differ slightly in that the normal mode mappings push whole words
 around, while the insert mode mappings always push from the current
-cursor position, even if the cursor is inside a word.
+cursor position, even if the cursor is inside a word (and therefore it splits
+the words at the cursor position).
 
-All the mappings have support for |tpope/repeat.vim| and are therefore
+All the mappings have support for |tpope/vim-repeat| and are therefore
 repeatable with the dot command.
 
   <Plug>(PushToNextWord)                                     *push-to-next-word*

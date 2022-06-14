@@ -6,10 +6,10 @@ Introduction
 
 *push.vim* is a plugin to push text in the current line to a "push stop" in a
 line above the current one (called a reference line).
-Its purpose is to align text with the text in some line above.
+Its purpose is to align text with the text in some line above (or below).
 
 Depending on the actual function a "push stop" may either be the beginning of
-a word or the end of the last word of a line.
+a word or the end of a word in a reference line.
 
 To find a "push stop" this plugin looks in the lines above the current one
 until it finds a push stop that is further to the right than the cursor (or
@@ -19,12 +19,12 @@ the start of the current word, respectively).
 Mappings
 --------
 
-All mappings exist for normal mode and insert mode.
-They differ slightly in that the normal mode mappings push whole words
-around, while the insert mode mappings always push from the current
-cursor position, even if the cursor is inside a word.
+All mappings exist for normal mode and insert mode. They differ slightly in
+that the normal mode mappings push whole words around, while the insert mode
+mappings always push from the current cursor position, even if the cursor is
+inside a word (and therefore it splits the word at the cursor position).
 
-All the mappings have support for [tpope/repeat.vim] and are therefore
+All the mappings have support for [tpope/vim-repeat] and are therefore
 repeatable with the dot command.
 
   - `<Plug>(PushToNextWord)`
@@ -39,7 +39,7 @@ repeatable with the dot command.
     The second mapping considers a word to be a number of word-characters
     preceded by at least one whitespace character. Therefore they are in
     line with vims use of "word" and "WORD".
-    See ':h word' and ':h WORD'.
+    See `:h word` and `:h WORD`.
 
     Example:
 
@@ -128,7 +128,7 @@ repeatable with the dot command.
     modifications to the text in the buffer. The nomenclature is the same as
     for the other mappings described above. The cursor may be pushed forward
     or backward. The uppercase variants jump WORD-wise. If the mapping name
-    ends in "Below", the push stop is search in the lines /below/ the
+    ends in "Below", the push stop is search in the lines _below_ the
     current one instead of the lines above.
 
     Even though those mappings are actually motions and do not change
@@ -140,31 +140,22 @@ repeatable with the dot command.
 Unless `g:push_no_default_mappings` is set to `v:true` the following
 mappings will be applied (for normal mode as well as for insert mode):
 
-  - `<Tab>w`:    `<Plug>(PushToNextWord)`
+|           |                                  |
+|-----------|----------------------------------|
+| `<Tab>w`  | `<Plug>(PushToNextWord)`         |
+| `<Tab>W`  | `<Plug>(PushToNextWORD)`         |
+| `<Tab>dw` | `<Plug>(PushToNextWordBelow)`    |
+| `<Tab>dW` | `<Plug>(PushToNextWORDBelow)`    |
+| `<Tab>e`  | `<Plug>(PushFarthest)`           |
+| `<Tab>b`  | `<Plug>(PushCursorBack)`         |
+| `<Tab>B`  | `<Plug>(PushCursorBACK)`         |
+| `<Tab>db` | `<Plug>(PushCursorBackBelow)`    |
+| `<Tab>dB` | `<Plug>(PushCursorBACKBelow)`    |
+| `<Tab>f`  | `<Plug>(PushCursorForward)`      |
+| `<Tab>F`  | `<Plug>(PushCursorFORWARD)`      |
+| `<Tab>df` | `<Plug>(PushCursorForwardBelow)` |
+| `<Tab>dF` | `<Plug>(PushCursorFORWARDBelow)` |
 
-  - `<Tab>W`:    `<Plug>(PushToNextWORD)`
-
-  - `<Tab>dw`:   `<Plug>(PushToNextWordBelow)`
-
-  - `<Tab>dW`:   `<Plug>(PushToNextWORDBelow)`
-
-  - `<Tab>e`:    `<Plug>(PushFarthest)`
-
-  - `<Tab>b`:    `<Plug>(PushCursorBack)`
-
-  - `<Tab>B`:    `<Plug>(PushCursorBACK)`
-
-  - `<Tab>db`:   `<Plug>(PushCursorBackBelow)`
-
-  - `<Tab>dB`:   `<Plug>(PushCursorBACKBelow)`
-
-  - `<Tab>f`:    `<Plug>(PushCursorForward)`
-
-  - `<Tab>F`:    `<Plug>(PushCursorFORWARD)`
-
-  - `<Tab>df`:   `<Plug>(PushCursorForwardBelow)`
-
-  - `<Tab>dF`:   `<Plug>(PushCursorFORWARDBelow)`
 
 Commands
 --------
@@ -179,7 +170,7 @@ Commands
     used.
     The split window can be closed with either `q` or `gq`.
 
-    Help window with `vim-quickui`:
+    Help window with `vim-quickui` (from an older version with much fewer mappings):
     ![push-help](pushhelp.png)
 
 
