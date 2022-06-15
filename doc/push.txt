@@ -1,7 +1,7 @@
 *push*  Push text to reference column in previous lines.
 
-Version:        0.4.0
-Release Date:   2022-07-14
+Version:        0.5.0
+Release Date:   2022-07-15
 
 ==============================================================================
 Contents ~
@@ -200,6 +200,10 @@ skywind3000/vim-quickui
 
 ==============================================================================
 CHANGELOG                                                            *changelog*
+
+    0.5.0 .................................................... 2022-07-15
+
+        - Change default mapping prefix from <Tab> to <Leader>
 
     0.4.0 .................................................... 2022-07-14
 

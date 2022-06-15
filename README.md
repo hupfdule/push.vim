@@ -142,19 +142,19 @@ mappings will be applied (for normal mode as well as for insert mode):
 
 |           |                                  |
 |-----------|----------------------------------|
-| `<Tab>w`  | `<Plug>(PushToNextWord)`         |
-| `<Tab>W`  | `<Plug>(PushToNextWORD)`         |
-| `<Tab>dw` | `<Plug>(PushToNextWordBelow)`    |
-| `<Tab>dW` | `<Plug>(PushToNextWORDBelow)`    |
-| `<Tab>e`  | `<Plug>(PushFarthest)`           |
-| `<Tab>b`  | `<Plug>(PushCursorBack)`         |
-| `<Tab>B`  | `<Plug>(PushCursorBACK)`         |
-| `<Tab>db` | `<Plug>(PushCursorBackBelow)`    |
-| `<Tab>dB` | `<Plug>(PushCursorBACKBelow)`    |
-| `<Tab>f`  | `<Plug>(PushCursorForward)`      |
-| `<Tab>F`  | `<Plug>(PushCursorFORWARD)`      |
-| `<Tab>df` | `<Plug>(PushCursorForwardBelow)` |
-| `<Tab>dF` | `<Plug>(PushCursorFORWARDBelow)` |
+| `<Leader>w`  | `<Plug>(PushToNextWord)`         |
+| `<Leader>W`  | `<Plug>(PushToNextWORD)`         |
+| `<Leader>dw` | `<Plug>(PushToNextWordBelow)`    |
+| `<Leader>dW` | `<Plug>(PushToNextWORDBelow)`    |
+| `<Leader>e`  | `<Plug>(PushFarthest)`           |
+| `<Leader>b`  | `<Plug>(PushCursorBack)`         |
+| `<Leader>B`  | `<Plug>(PushCursorBACK)`         |
+| `<Leader>db` | `<Plug>(PushCursorBackBelow)`    |
+| `<Leader>dB` | `<Plug>(PushCursorBACKBelow)`    |
+| `<Leader>f`  | `<Plug>(PushCursorForward)`      |
+| `<Leader>F`  | `<Plug>(PushCursorFORWARD)`      |
+| `<Leader>df` | `<Plug>(PushCursorForwardBelow)` |
+| `<Leader>dF` | `<Plug>(PushCursorFORWARDBelow)` |
 
 
 Commands
