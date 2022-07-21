@@ -1,8 +1,8 @@
 " Plugin folklore "{{{1
-if v:version < 700 || exists('b:did_ftplugin')
+if v:version < 700 || exists('g:loaded_push')
   finish
 endif
-let b:did_ftplugin = 1
+let g:loaded_push = 1
 
 let s:cpo_save = &cpo
 "}}}1
