@@ -1,7 +1,7 @@
 *push*  Push text to reference column in previous lines.
 
-Version:        0.5.0
-Release Date:   2022-07-15
+Version:        0.6.0
+Release Date:   2022-07-27
 
 ==============================================================================
 Contents ~
@@ -208,6 +208,12 @@ COMPLEMENTARY PLUGINS                               *push-complementary-plugins*
 
 ==============================================================================
 CHANGELOG                                                       *push-changelog*
+
+    0.6.0 .................................................... 2022-07-27
+
+        - Fix prohibiting ftplugins from loading
+        - Use vimpl/vim-pluginhelp for :PushHelp
+        - Smaller fixes to the vimdoc help file
 
     0.5.0 .................................................... 2022-07-15
 
