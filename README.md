@@ -165,6 +165,8 @@ Commands
     Open a help window displaying the current key mappings and settings
     of push.vim
 
+    This command is only available if [vimpl/vim-pluginhelp] is installed.
+
     If [skywind3000/vim-quickui] is available the help content will be
     shown in a popup dialog. Otherwise a normal split window will be
     used.
@@ -190,6 +192,10 @@ Complementary plugins
     To support repeating push mappings with the dot command, vim-repeat needs
     to be installed.
 
+  - [vimpl/vim-pluginhelp]
+
+    To display the help window, vim-quickui needs to be installed.
+
   - [skywind3000/vim-quickui]
 
     To display the help window in a floating window, vim-quickui needs to be
@@ -205,4 +211,5 @@ http://opensource.org/licenses/MIT
 
 
 [tpope/vim-repeat]: https://github.com/tpope/vim-repeat
+[vimpl/vim-pluginhelp]: https://github.com/vimpl/vim-pluginhelp
 [skywind3000/vim-quickui]: https://github.com/skywind3000/vim-quickui

@@ -166,6 +166,8 @@ COMMANDS                                                              *commands*
       Open a help window displaying the current key mappings and settings
       of push.vim
 
+      This command is only available if |vimpl/vim-pluginhelp| is installed.
+
       If |skywind3000/vim-quickui| is available the help content will be
       shown in a popup dialog. Otherwise a normal split window will be
       used.
@@ -189,6 +191,12 @@ tpope/vim-repeat
     to be installed.
 
     https://github.com/tpope/vim-repeat
+
+*vimpl/vim-pluginhelp*
+
+    To display the help window, vim-pluginhelp needs to be installed.
+
+    https://github.com/vimpl/vim-pluginhelp
 
 skywind3000/vim-quickui
 

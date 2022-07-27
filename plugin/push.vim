@@ -63,7 +63,34 @@ if !get(g:, 'push_no_default_mappings', 0)
   nmap <Leader>dF   <Plug>(PushCursorFORWARDBelow)
 endif
 
-command PushHelp :call push#help()
+" Prepare the short help (via vimpl/vim-pluginhelp)
+autocmd VimEnter * :call s:prepare_help()
+function! s:prepare_help() abort
+  if exists('g:loaded_pluginhelp')
+    let s:plugin_spec = {
+      \ 'help_topic': 'push',
+      \ 'mappings':  [
+      \    {'plugmap': '<Plug>(PushToNextWord)',         'desc': 'Push to next word'},
+      \    {'plugmap': '<Plug>(PushToNextWORD)',         'desc': 'Push to next WORD'},
+      \    {'plugmap': '<Plug>(PushToNextWordBelow)',    'desc': 'Push to next word below'},
+      \    {'plugmap': '<Plug>(PushToNextWORDBelow)',    'desc': 'Push to next WORD below'},
+      \    {'plugmap': '<Plug>(PushFarthest)',           'desc': 'Push to right align'},
+      \    {'plugmap': '<Plug>(PushCursorBack)',         'desc': 'Move Cursor to prev word'},
+      \    {'plugmap': '<Plug>(PushCursorBACK)',         'desc': 'Move Cursor to prev WORD'},
+      \    {'plugmap': '<Plug>(PushCursorBackBelow)',    'desc': 'Move Cursor to prev word below'},
+      \    {'plugmap': '<Plug>(PushCursorBACKBelow)',    'desc': 'Move Cursor to prev WORD below'},
+      \    {'plugmap': '<Plug>(PushCursorForward)',      'desc': 'Move Cursor to next word'},
+      \    {'plugmap': '<Plug>(PushCursorFORWARD)',      'desc': 'Move Cursor to next WORD'},
+      \    {'plugmap': '<Plug>(PushCursorForwardBelow)', 'desc': 'Move Cursor to next word below'},
+      \    {'plugmap': '<Plug>(PushCursorFORWARDBelow)', 'desc': 'Move Cursor to next WORD below'},
+      \  ],
+      \ 'settings':  [
+      \    {'setting': 'g:push_no_default_mappings', 'desc': 'Do not bind any default mappings'},
+      \  ],
+      \ }
+    command PushHelp :call pluginhelp#show(s:plugin_spec)
+  endif
+endfunction
 
 " Plugin folklore "{{{1
 let &cpo = s:cpo_save
