@@ -185,7 +185,7 @@ SETTINGS                                                         *push-settings*
 ==============================================================================
 COMPLEMENTARY PLUGINS                               *push-complementary-plugins*
 
-tpope/vim-repeat
+*tpope/vim-repeat*
 
     To support repeating push mappings with the dot command, vim-repeat needs
     to be installed.
@@ -198,7 +198,7 @@ tpope/vim-repeat
 
     https://github.com/vimpl/vim-pluginhelp
 
-skywind3000/vim-quickui
+*skywind3000/vim-quickui*
 
     To display the help window in a floating window, vim-quickui needs to be
     installed.
