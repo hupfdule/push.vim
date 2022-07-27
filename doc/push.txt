@@ -6,24 +6,24 @@ Release Date:   2022-07-15
 ==============================================================================
 Contents ~
 
-    1. Introduction ............................. |introduction|
-    2. Mappings ................................. |mappings|
+    1. Introduction ............................. |push-introduction|
+    2. Mappings ................................. |push-mappings|
          <Plug>PushToNextWord                     |push-to-next-word|
          <Plug>PushToNextWORD                     |push-to-next-WORD|
          <Plug>PushToNextWordBelow                |push-to-next-word-below|
          <Plug>PushToNextWORDBelow                |push-to-next-WORD-below|
          <Plug>PushFarthest                       |push-farthest|
          <Plug>PushCursor*                        |push-cursor|
-         Default mappings                         |default-mappings|
-    3. Commands ................................. |commands|
+         Default mappings                         |push-default-mappings|
+    3. Commands ................................. |push-commands|
          :PushHelp                                |:PushHelp|
-    4. Settings ................................. |settings|
-    5. Complementary Plugins .................... |complementary-plugins|
-    6. Changelog ................................ |changelog|
-    7. License .................................. |license|
+    4. Settings ................................. |push-settings|
+    5. Complementary Plugins .................... |push-complementary-plugins|
+    6. Changelog ................................ |push-changelog|
+    7. License .................................. |push-license|
 
 ==============================================================================
-INTRODUCTION                                                      *introduction*
+INTRODUCTION                                                 *push-introduction*
 
 *push.vim* is a plugin to push text in the current line to a "push stop" in a
 line above the current one (called a reference line).
@@ -38,7 +38,7 @@ the start of the current word, respectively).
 
 
 ==============================================================================
-MAPPINGS                                                              *mappings*
+MAPPINGS                                                         *push-mappings*
 
 All mappings exist for normal mode and insert mode.
 They differ slightly in that the normal mode mappings push whole words
@@ -99,7 +99,7 @@ repeatable with the dot command.
       <Plug>(PushToNextWORD), but push to the push stop in the lines /below/
       the current one instead of the lines above.
 
-  <Plug>(PushFarthest)                                        *push-to-farthest*
+  <Plug>(PushFarthest)                                           *push-farthest*
 
       Push the content of the line from the current word (in normal mode)
       or the cursor (in insert mode) to right align with a reference line
@@ -138,7 +138,7 @@ repeatable with the dot command.
       integrating with |tpope/vim-repeat|.
 
 
-Default mappings                                              *default-mappings*
+Default mappings                                         *push-default-mappings*
 
 Unless |g:push_no_default_mappings| is set to `v:true` the following
 mappings will be applied (for normal mode as well as for insert mode):
@@ -159,7 +159,7 @@ mappings will be applied (for normal mode as well as for insert mode):
 
 
 ==============================================================================
-COMMANDS                                                              *commands*
+COMMANDS                                                         *push-commands*
 
   :PushHelp                                                          *:PushHelp*
 
@@ -175,7 +175,7 @@ COMMANDS                                                              *commands*
 
 
 ==============================================================================
-SETTINGS                                                              *settings*
+SETTINGS                                                         *push-settings*
 
 *g:push_no_default_mappings*
 
@@ -183,7 +183,7 @@ SETTINGS                                                              *settings*
 
 
 ==============================================================================
-COMPLEMENTARY PLUGINS                                    *complementary-plugins*
+COMPLEMENTARY PLUGINS                               *push-complementary-plugins*
 
 tpope/vim-repeat
 
@@ -207,7 +207,7 @@ skywind3000/vim-quickui
 
 
 ==============================================================================
-CHANGELOG                                                            *changelog*
+CHANGELOG                                                       *push-changelog*
 
     0.5.0 .................................................... 2022-07-15
 
@@ -232,7 +232,7 @@ CHANGELOG                                                            *changelog*
 
 
 ==============================================================================
-LICENSE                                                                *license*
+LICENSE                                                           *push-license*
 
 This plugin is licensed under the terms of the MIT License.
 
